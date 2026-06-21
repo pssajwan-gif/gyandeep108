@@ -1,83 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-  <title>GyanDeep - Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { 
-      font-family: Arial; 
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      height: 100vh; 
-      margin: 0; 
-    }
-    .login-box { 
-      background: white; 
-      padding: 40px; 
-      border-radius: 15px; 
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
-      text-align: center; 
-      width: 320px; 
-    }
-    h2 { color: #667eea; margin-bottom: 10px; }
-    p { color: #666; font-size: 14px; }
-    input { 
-      width: 100%; 
-      padding: 12px; 
-      margin: 15px 0; 
-      border: 2px solid #ddd; 
-      border-radius: 8px; 
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-    button { 
-      width: 100%; 
-      padding: 12px; 
-      background: #667eea; 
-      color: white; 
-      border: none; 
-      border-radius: 8px; 
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:active { background: #5568d3; }
-    #error { color: red; margin-top: 10px; height: 20px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GyanDeep - Gyan + Manoranjan</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh; color: white; padding: 20px;
+        }
+        .container { max-width: 500px; margin: 0 auto; }
+        h1 { text-align: center; margin: 20px 0; font-size: 28px; }
+        .tagline { text-align: center; margin-bottom: 30px; opacity: 0.9; }
+        
+        .jigyasa-btn {
+            background: #ff6b6b; padding: 20px; border-radius: 15px; 
+            text-align: center; font-size: 20px; font-weight: bold;
+            margin-bottom: 25px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .mode-buttons { display: flex; gap: 10px; margin-bottom: 30px; }
+        .mode-btn { 
+            flex: 1; background: rgba(255,255,255,0.2); padding: 15px; 
+            border-radius: 10px; text-align: center; cursor: pointer;
+        }
+        
+        .zone-title { 
+            font-size: 18px; margin: 25px 0 15px 0; padding-left: 10px;
+            border-left: 4px solid #ffd93d;
+        }
+        
+        .grid { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; 
+            margin-bottom: 20px;
+        }
+        
+        .card { 
+            background: rgba(255,255,255,0.15); padding: 20px; 
+            border-radius: 12px; text-align: center; cursor: pointer;
+            min-height: 100px; display: flex; flex-direction: column; justify-content: center;
+        }
+        .card:hover { background: rgba(255,255,255,0.25); }
+        .icon { font-size: 30px; margin-bottom: 8px; }
+        .footer { text-align: center; margin-top: 40px; opacity: 0.7; font-size: 14px; }
+    </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>🪔 GyanDeep</h2>
-    <p>साइट में प्रवेश के लिए पासवर्ड डालें</p>
-    <input type="password" id="pass" placeholder="Password डालें">
-    <button onclick="check()">Login करें</button>
-    <p id="error"></p>
-  </div>
+    <div class="container">
+        <h1>🪔 GyanDeep में स्वागत है</h1>
+        <p class="tagline">"पढ़ने वाला पढ़ें, सुनने वाला सुने, लिखने वाला लिखे"</p>
 
-  <script>
-    function check() {
-      let password = document.getElementById('pass').value;
-      if(password === 'gyan108') {
-        document.body.innerHTML = `
-          <div style="text-align:center; padding:50px; font-family:Arial;">
-            <h1 style="color:#667eea;">Welcome to GyanDeep! 🎉</h1>
-            <p style="font-size:18px; color:#333;">आप सफलतापूर्वक लॉगिन हो गए हैं</p>
-            <p style="color:#666;">साइट अभी बन रही है... जल्दी ही अपडेट मिलेगा</p>
-          </div>
-        `;
-      } else {
-        document.getElementById('error').innerText = 'गलत पासवर्ड! दोबारा कोशिश करें';
-        document.getElementById('pass').value = '';
-      }
-    }
-    
-    document.getElementById('pass').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        check();
-      }
-    });
-  </script>
+        <div class="jigyasa-btn" onclick="alert('AI Guru जल्द आ रहा है! यहाँ आप कुछ भी पूछ सकेंगे।')">
+            🔥 मुझे कुछ जानना है - AI Guru से पूछो
+        </div>
+
+        <div class="mode-buttons">
+            <div class="mode-btn" onclick="alert('Padho Mode जल्द आ रहा है!')">📖 Padho</div>
+            <div class="mode-btn" onclick="alert('Suno Mode जल्द आ रहा है!')">🎧 Suno</div>
+            <div class="mode-btn" onclick="alert('Likho Mode जल्द आ रहा है!')">✍️ Likho</div>
+        </div>
+
+        <div class="zone-title">📚 Gyan Zone</div>
+        <div class="grid">
+            <div class="card" onclick="alert('Vigyan Gyan जल्द आ रहा है!')"><div class="icon">🔬</div>Vigyan Gyan</div>
+            <div class="card" onclick="alert('Dharma Gyan जल्द आ रहा है!')"><div class="icon">🕉️</div>Dharma Gyan</div>
+            <div class="card" onclick="alert('Tech Gyan जल्द आ रहा है!')"><div class="icon">💻</div>Tech Gyan</div>
+            <div class="card" onclick="alert('Kanoon Gyan जल्द आ रहा है!')"><div class="icon">⚖️</div>Kanoon Gyan</div>
+        </div>
+
+        <div class="zone-title">🎭 Manoranjan Zone</div>
+        <div class="grid">
+            <div class="card" onclick="alert('Kahaniya जल्द आ रही हैं!')"><div class="icon">📖</div>Kahaniya</div>
+            <div class="card" onclick="alert('Audio Natak जल्द आ रहे हैं!')"><div class="icon">🎧</div>Audio Natak</div>
+            <div class="card" onclick="alert('Gyan Flix जल्द आ रहा है!')"><div class="icon">🎬</div>Gyan Flix</div>
+            <div class="card" onclick="alert('Khel Khel Me जल्द आ रहा है!')"><div class="icon">🎮</div>Khel Khel Me</div>
+        </div>
+
+        <div class="zone-title">🔮 Prachin Vidya Kendra</div>
+        <div class="grid">
+            <div class="card" onclick="alert('Jyotish Shastra जल्द आ रहा है!')"><div class="icon">🌟</div>Jyotish</div>
+            <div class="card" onclick="alert('Hastrekha जल्द आ रही है!')"><div class="icon">✋</div>Hastrekha</div>
+            <div class="card" onclick="alert('Ank Shastra जल्द आ रहा है!')"><div class="icon">🔢</div>Ank Shastra</div>
+            <div class="card" onclick="alert('Panchang जल्द आ रहा है!')"><div class="icon">🌙</div>Panchang</div>
+        </div>
+
+        <div class="footer">
+            GyanDeep v2.0 | By Pankaj Singh Sajwan ❤️<br>
+            "जो 1 जानने आया, उसे 10 देकर भेजेंगे"
+        </div>
+    </div>
 </body>
 </html>
