@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GyanDeep - Gyan + Manoranjan</title>
+    <title>GyanDeep - Padho, Suno, Likho</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -11,85 +11,65 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh; color: white; padding: 20px;
         }
-        .container { max-width: 500px; margin: 0 auto; }
-        h1 { text-align: center; margin: 20px 0; font-size: 28px; }
-        .tagline { text-align: center; margin-bottom: 30px; opacity: 0.9; }
-        
-        .jigyasa-btn {
-            background: #ff6b6b; padding: 20px; border-radius: 15px; 
-            text-align: center; font-size: 20px; font-weight: bold;
-            margin-bottom: 25px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .mode-buttons { display: flex; gap: 10px; margin-bottom: 30px; }
-        .mode-btn { 
-            flex: 1; background: rgba(255,255,255,0.2); padding: 15px; 
-            border-radius: 10px; text-align: center; cursor: pointer;
-        }
-        
-        .zone-title { 
-            font-size: 18px; margin: 25px 0 15px 0; padding-left: 10px;
-            border-left: 4px solid #ffd93d;
-        }
-        
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { font-size: 32px; margin-bottom: 5px; }
+        .header p { opacity: 0.9; font-size: 16px; }
         .grid { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; 
-            margin-bottom: 20px;
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 15px; 
+            max-width: 600px; 
+            margin: 0 auto;
         }
-        
         .card { 
-            background: rgba(255,255,255,0.15); padding: 20px; 
-            border-radius: 12px; text-align: center; cursor: pointer;
-            min-height: 100px; display: flex; flex-direction: column; justify-content: center;
+            background: rgba(255,255,255,0.15); 
+            padding: 20px; 
+            border-radius: 15px; 
+            text-align: center; 
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .card:hover { background: rgba(255,255,255,0.25); }
-        .icon { font-size: 30px; margin-bottom: 8px; }
-        .footer { text-align: center; margin-top: 40px; opacity: 0.7; font-size: 14px; }
+        .card:hover { background: rgba(255,255,255,0.25); transform: scale(1.05); }
+        .icon { font-size: 40px; margin-bottom: 10px; }
+        .footer { text-align: center; margin-top: 40px; opacity: 0.8; font-size: 14px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🪔 GyanDeep में स्वागत है</h1>
-        <p class="tagline">"पढ़ने वाला पढ़ें, सुनने वाला सुने, लिखने वाला लिखे"</p>
+    <div class="header">
+        <h1>🪔 GyanDeep</h1>
+        <p>Padho, Suno, Likho - सब एक जगह</p>
+    </div>
 
-        <div class="jigyasa-btn" onclick="alert('AI Guru जल्द आ रहा है! यहाँ आप कुछ भी पूछ सकेंगे।')">
-            🔥 मुझे कुछ जानना है - AI Guru से पूछो
+    <div class="grid">
+        <div class="card" onclick="window.location='upanyas.html'">
+            <div class="icon">📚</div>Upanyas, Series & Kahaniya
         </div>
-
-        <div class="mode-buttons">
-            <div class="mode-btn" onclick="alert('Padho Mode जल्द आ रहा है!')">📖 Padho</div>
-            <div class="mode-btn" onclick="alert('Suno Mode जल्द आ रहा है!')">🎧 Suno</div>
-            <div class="mode-btn" onclick="alert('Likho Mode जल्द आ रहा है!')">✍️ Likho</div>
+        <div class="card" onclick="window.location='likho.html'">
+            <div class="icon">✍️</div>Likho
         </div>
-
-        <div class="zone-title">📚 Gyan Zone</div>
-        <div class="grid">
-            <div class="card" onclick="alert('Vigyan Gyan जल्द आ रहा है!')"><div class="icon">🔬</div>Vigyan Gyan</div>
-            <div class="card" onclick="alert('Dharma Gyan जल्द आ रहा है!')"><div class="icon">🕉️</div>Dharma Gyan</div>
-            <div class="card" onclick="alert('Tech Gyan जल्द आ रहा है!')"><div class="icon">💻</div>Tech Gyan</div>
-            <div class="card" onclick="alert('Kanoon Gyan जल्द आ रहा है!')"><div class="icon">⚖️</div>Kanoon Gyan</div>
+        <div class="card" onclick="window.location='kavita.html'">
+            <div class="icon">🪶</div>Kavita, Gazal, Sahitya
         </div>
-
-        <div class="zone-title">🎭 Manoranjan Zone</div>
-        <div class="grid">
-            <div class="card" onclick="alert('Kahaniya जल्द आ रही हैं!')"><div class="icon">📖</div>Kahaniya</div>
-            <div class="card" onclick="alert('Audio Natak जल्द आ रहे हैं!')"><div class="icon">🎧</div>Audio Natak</div>
-            <div class="card" onclick="alert('Gyan Flix जल्द आ रहा है!')"><div class="icon">🎬</div>Gyan Flix</div>
-            <div class="card" onclick="alert('Khel Khel Me जल्द आ रहा है!')"><div class="icon">🎮</div>Khel Khel Me</div>
+        <div class="card" onclick="window.location='bhakti.html'">
+            <div class="icon">🙏</div>Bhakti, Dharm, Dhyan
         </div>
-
-        <div class="zone-title">🔮 Prachin Vidya Kendra</div>
-        <div class="grid">
-            <div class="card" onclick="alert('Jyotish Shastra जल्द आ रहा है!')"><div class="icon">🌟</div>Jyotish</div>
-            <div class="card" onclick="alert('Hastrekha जल्द आ रही है!')"><div class="icon">✋</div>Hastrekha</div>
-            <div class="card" onclick="alert('Ank Shastra जल्द आ रहा है!')"><div class="icon">🔢</div>Ank Shastra</div>
-            <div class="card" onclick="alert('Panchang जल्द आ रहा है!')"><div class="icon">🌙</div>Panchang</div>
+        <div class="card" onclick="window.location='suno.html'">
+            <div class="icon">🎧</div>Suno
         </div>
-
-        <div class="footer">
-            GyanDeep v2.0 | By Pankaj Singh Sajwan ❤️<br>
-            "जो 1 जानने आया, उसे 10 देकर भेजेंगे"
+        <div class="card" onclick="window.location='gyan.html'">
+            <div class="icon">🧠</div>Gyan, Vigyan, Samanya Gyan
+        </div>
+        <div class="card" onclick="window.location='margdarshan.html'">
+            <div class="icon">🧭</div>Margdarshan, Motivational
+        </div>
+        <div class="card" onclick="window.location='bhasha.html'">
+            <div class="icon">🌐</div>Bhasha, Gyan, Sikhsha
         </div>
     </div>
+
+    <div class="footer">
+        GyanDeep v2.1 | By Pankaj Singh Sajwan ❤️<br>
+        "21 उपन्यास + 8 Category = Complete Platform"
+    </div>
 </body>
-</html>
+    </html>
