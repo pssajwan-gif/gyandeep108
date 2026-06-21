@@ -1,10 +1,15 @@
-backend:                    ← Level 1 = Column 1
-  name: git-gateway         ← Level 2 = 2 Space Indent
-  branch: main              ← Level 2 = 2 Space Indent
-media_folder: static...     ← Level 1 = Column 1
-public_folder: /images...   ← Level 1 = Column 1
-collections:                ← Level 1 = Column 1
-    - name: chapter           ← Level 2 = 2 Space Indent
-    label: Chapter          ← Level 3 = 4 Space Indent
-    fields:                 ← Level 3 = 4 Space Indent
-            - {label: Title...}   ← Level 4 = 6 Space Indent
+backend:
+  name: git-gateway
+  branch: main
+media_folder: static/images/uploads
+public_folder: /images/uploads
+collections:
+    - name: chapter
+    label: Chapter
+    folder: content/chapter
+    create: true
+    slug: '{{slug}}'
+    fields:
+            - {label: Title, name: title, widget: string}
+            - {label: Chapter Number, name: chapter_number, widget: number}
+            - {label: Body, name: body, widget: markdown}
