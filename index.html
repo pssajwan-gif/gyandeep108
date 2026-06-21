@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GyanDeep - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { 
+      font-family: Arial; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh; 
+      margin: 0; 
+    }
+    .login-box { 
+      background: white; 
+      padding: 40px; 
+      border-radius: 15px; 
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+      text-align: center; 
+      width: 320px; 
+    }
+    h2 { color: #667eea; margin-bottom: 10px; }
+    p { color: #666; font-size: 14px; }
+    input { 
+      width: 100%; 
+      padding: 12px; 
+      margin: 15px 0; 
+      border: 2px solid #ddd; 
+      border-radius: 8px; 
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    button { 
+      width: 100%; 
+      padding: 12px; 
+      background: #667eea; 
+      color: white; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:active { background: #5568d3; }
+    #error { color: red; margin-top: 10px; height: 20px; }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>🪔 GyanDeep</h2>
+    <p>साइट में प्रवेश के लिए पासवर्ड डालें</p>
+    <input type="password" id="pass" placeholder="Password डालें">
+    <button onclick="check()">Login करें</button>
+    <p id="error"></p>
+  </div>
+
+  <script>
+    function check() {
+      let password = document.getElementById('pass').value;
+      if(password === 'gyan108') {
+        document.body.innerHTML = `
+          <div style="text-align:center; padding:50px; font-family:Arial;">
+            <h1 style="color:#667eea;">Welcome to GyanDeep! 🎉</h1>
+            <p style="font-size:18px; color:#333;">आप सफलतापूर्वक लॉगिन हो गए हैं</p>
+            <p style="color:#666;">साइट अभी बन रही है... जल्दी ही अपडेट मिलेगा</p>
+          </div>
+        `;
+      } else {
+        document.getElementById('error').innerText = 'गलत पासवर्ड! दोबारा कोशिश करें';
+        document.getElementById('pass').value = '';
+      }
+    }
+    
+    document.getElementById('pass').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        check();
+      }
+    });
+  </script>
+</body>
+</html>
