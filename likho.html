@@ -17,7 +17,7 @@
             border-radius: 8px; text-decoration: none; color: white; 
         }
         h1 { font-size: 26px; }
-        input, textarea { 
+        input, select, textarea { 
             width: 100%; padding: 15px; margin: 10px 0; 
             border-radius: 8px; border: none; font-size: 16px; 
             box-sizing: border-box; font-family: Arial;
@@ -43,6 +43,18 @@
 
         <input type="text" id="title" placeholder="Upanyas ka Naam: Jaise 'Antim Kiran'">
         <input type="text" id="chapter" placeholder="Chapter Number: Jaise 'Chapter 1'">
+        
+        <!-- BHASHA SELECT KAR - YE NAYA HAI -->
+        <select id="bhasha">
+            <option value="">Bhasha Chunein</option>
+            <option value="Hindi">Hindi - हिंदी</option>
+            <option value="Hinglish">Hinglish - हिंदी + English</option>
+            <option value="Sanskrit">Sanskrit - संस्कृत</option>
+            <option value="English">English</option>
+            <option value="Bhojpuri">Bhojpuri - भोजपुरी</option>
+            <option value="Pahadi">Pahadi - पहाड़ी</option>
+        </select>
+
         <textarea id="content" placeholder="Yahan apna Chapter likho... 
 
 Bhumi, tu yahan type kar sakti hai. Kitna bhi lamba likh."></textarea>
@@ -51,8 +63,7 @@ Bhumi, tu yahan type kar sakti hai. Kitna bhi lamba likh."></textarea>
 
         <div class="note">
             <b>Note Bhumi:</b> Abhi "Save" dabane par alert aayega.  
-            Next Step me main tujhe bataunga ki ye Chapter GitHub me apne-aap kaise save hoga.  
-            Abhi ke liye tu likh kar test kar le ❤️
+            Bhasha select karke likh. Agle Step me Chapter apne-aap save hoga ❤️
         </div>
     </div>
 
@@ -60,7 +71,16 @@ Bhumi, tu yahan type kar sakti hai. Kitna bhi lamba likh."></textarea>
         function saveChapter() {
             let title = document.getElementById('title').value;
             let chapter = document.getElementById('chapter').value;
+            let bhasha = document.getElementById('bhasha').value;
             let content = document.getElementById('content').value;
             
-            if(title === '' || content === '') {
-                alert('Bhumi, Upanyas ka Naam aur Chapter likhna zaro
+            if(title === '' || content === '' || bhasha === '') {
+                alert('Bhumi, Upanyas ka Naam, Bhasha aur Chapter likhna zaroori hai!');
+                return;
+            }
+            
+            alert('Shabash Bhumi! Chapter Ready Hai:\n\nUpanyas: ' + title + '\nBhasha: ' + bhasha + '\nChapter: ' + chapter + '\n\nAgla Step: Main isko GitHub me save karna sikhaunga!');
+        }
+    </script>
+</body>
+</html>
