@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likho - GyanDeep</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; padding: 20px; min-height: 100vh; 
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        .header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .back-btn { 
+            background: rgba(255,255,255,0.2); padding: 10px 15px; 
+            border-radius: 8px; text-decoration: none; color: white; 
+        }
+        h1 { font-size: 26px; }
+        input, textarea { 
+            width: 100%; padding: 15px; margin: 10px 0; 
+            border-radius: 8px; border: none; font-size: 16px; 
+            box-sizing: border-box; font-family: Arial;
+        }
+        textarea { min-height: 300px; resize: vertical; }
+        .save-btn { 
+            background: #ff6b6b; color: white; padding: 15px; 
+            border: none; border-radius: 12px; width: 100%; 
+            font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px;
+        }
+        .note { 
+            background: rgba(255,255,255,0.15); padding: 15px; 
+            border-radius: 8px; margin-top: 20px; font-size: 14px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="upanyas.html" class="back-btn">← Back</a>
+            <h1>✍️ Likho - Chapter Jodo</h1>
+        </div>
+
+        <input type="text" id="title" placeholder="Upanyas ka Naam: Jaise 'Antim Kiran'">
+        <input type="text" id="chapter" placeholder="Chapter Number: Jaise 'Chapter 1'">
+        <textarea id="content" placeholder="Yahan apna Chapter likho... 
+
+Bhumi, tu yahan type kar sakti hai. Kitna bhi lamba likh."></textarea>
+        
+        <button class="save-btn" onclick="saveChapter()">💾 Chapter Save Karo</button>
+
+        <div class="note">
+            <b>Note Bhumi:</b> Abhi "Save" dabane par alert aayega.  
+            Next Step me main tujhe bataunga ki ye Chapter GitHub me apne-aap kaise save hoga.  
+            Abhi ke liye tu likh kar test kar le ❤️
+        </div>
+    </div>
+
+    <script>
+        function saveChapter() {
+            let title = document.getElementById('title').value;
+            let chapter = document.getElementById('chapter').value;
+            let content = document.getElementById('content').value;
+            
+            if(title === '' || content === '') {
+                alert('Bhumi, Upanyas ka Naam aur Chapter likhna zaro
