@@ -4,18 +4,13 @@ backend:
 media_folder: static/images/uploads
 public_folder: /images/uploads
 collections:
-  - name: "chapter"
-    label: "Chapter"
-    folder: "content/chapter"
+  - name: chapter
+    label: Chapter
+    folder: content/chapter
     create: true
     slug: "{{slug}}"
     fields:
-      - label: "Title"
-        name: "title"
-        widget: "string"
-      - label: "Chapter Number"
-        name: "chapter_number"
-        widget: "number"
-      - label: "Body"
-        name: "body"
-        widget: "markdown"
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Chapter Number", name: "chapter_number", widget: "number"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      
