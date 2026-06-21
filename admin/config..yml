@@ -8,8 +8,9 @@ collections:
     label: Chapter
     folder: content/chapter
     create: true
-    slug: '{{slug}}'
+    slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Chapter Number", name: "chapter_number", widget: "number"}
       - {label: "Body", name: "body", widget: "markdown"}
+      
