@@ -28,8 +28,15 @@
             text-align: center; 
             cursor: pointer;
             transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .card:hover { background: rgba(255,255,255,0.25); transform: scale(1.05); }
+        .ai-card { 
+            background: rgba(0, 0, 0, 0.4); 
+            border: 2px solid #00d4ff; 
+        }
         .icon { font-size: 40px; margin-bottom: 10px; }
         .footer { text-align: center; margin-top: 40px; opacity: 0.8; font-size: 14px; }
     </style>
@@ -65,11 +72,15 @@
         <div class="card" onclick="window.location='bhasha.html'">
             <div class="icon">🌐</div>Bhasha, Gyan, Sikhsha
         </div>
+        <!-- GyanDeep AI Card -->
+        <div class="card ai-card" onclick="window.location='ai-chat.html'">
+            <div class="icon">🤖</div>GyanDeep AI
+        </div>
     </div>
 
     <div class="footer">
-        GyanDeep v2.1 | By Pankaj Singh Sajwan ❤️<br>
-        "21 उपन्यास + 8 Category = Complete Platform"
+        GyanDeep v2.2.0 | By Pankaj Singh Sajwan ❤️<br>
+        "AI integrated! All Categories Active."
     </div>
 </body>
-    </html>
+</html>
