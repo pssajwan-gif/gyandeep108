@@ -1,18 +1,13 @@
 ---
 backend:
-  name: github
-  repo: pssajwan-gif/gyandeep108
+  name: git-gateway
   branch: main
-  base_url: https://api.netlify.com
-  auth_endpoint: auth
-  auth_token_endpoint: auth
-  app_id: Ov23lipx3iHSwniDIKSC
 media_folder: assets/uploads
 public_folder: /assets/uploads
 collections:
-  - name: blog
-    label: Blog Post
-    folder: _posts
+  - name: upanyas
+    label: 📚 Upanyas, Series & Kahaniya
+    folder: _upanyas
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
@@ -22,10 +17,115 @@ collections:
       - label: Date
         name: date
         widget: datetime
-      - label: Featured Image
+      - label: Cover Image
         name: thumbnail
         widget: image
         required: false
+      - label: Body
+        name: body
+        widget: markdown
+  - name: likho
+    label: ✍️ Likho
+    folder: _likho
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+      - label: Body
+        name: body
+        widget: markdown
+  - name: kavita
+    label: 🪶 Kavita, Gazal, Sahitya
+    folder: _kavita
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+      - label: Kavita
+        name: body
+        widget: markdown
+  - name: bhakti
+    label: 🙏 Bhakti, Dharm, Dhyan
+    folder: _bhakti
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+      - label: Body
+        name: body
+        widget: markdown
+  - name: suno
+    label: 🎧 Suno
+    folder: _suno
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Audio Link
+        name: audio_url
+        widget: string
+      - label: Description
+        name: body
+        widget: markdown
+  - name: gyan
+    label: 🧠 Gyan, Vigyan, Samanya Gyan
+    folder: _gyan
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+      - label: Body
+        name: body
+        widget: markdown
+  - name: margdarshan
+    label: 🧭 Margdarshan, Motivational
+    folder: _margdarshan
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+      - label: Body
+        name: body
+        widget: markdown
+  - name: bhasha
+    label: 🌐 Bhasha, Gyan, Sikhsha
+    folder: _bhasha
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
       - label: Body
         name: body
         widget: markdown
