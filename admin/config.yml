@@ -1,21 +1,29 @@
+---
 backend:
   name: github
   repo: pssajwan-gif/gyandeep108
   branch: main
   base_url: https://gyandeep108.netlify.app
   auth_endpoint: /api/auth
-
-media_folder: "assets/uploads"
-public_folder: "/assets/uploads"
-
+media_folder: assets/uploads
+public_folder: /assets/uploads
 collections:
-  - name: "blog"
-    label: "Blog Post"
-    folder: "_posts"
+  - name: blog
+    label: Blog Post
+    folder: _posts
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Date", name: "date", widget: "datetime"}
-      - {label: "Featured Image", name: "thumbnail", widget: "image", required: false}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+      - label: Featured Image
+        name: thumbnail
+        widget: image
+        required: false
+      - label: Body
+        name: body
+        widget: markdown
