@@ -3,6 +3,10 @@ backend:
   name: github
   repo: pssajwan-gif/gyandeep108
   branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+  auth_token_endpoint: auth
+  app_id: Ov23lipx3iHSwniDIKSC
 media_folder: assets/uploads
 public_folder: /assets/uploads
 collections:
