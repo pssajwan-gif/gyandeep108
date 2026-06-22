@@ -31,6 +31,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            font-size: 14px;
+            font-weight: bold;
         }
         .card:hover { background: rgba(255,255,255,0.25); transform: scale(1.05); }
         .ai-card { 
@@ -38,7 +40,7 @@
             border: 2px solid #00d4ff; 
         }
         .icon { font-size: 40px; margin-bottom: 10px; }
-        .footer { text-align: center; margin-top: 40px; opacity: 0.8; font-size: 14px; }
+        .footer { text-align: center; margin-top: 40px; opacity: 0.8; font-size: 14px; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -48,39 +50,38 @@
     </div>
 
     <div class="grid">
-        <div class="card" onclick="window.location='upanyas.html'">
-            <div class="icon">📚</div>Upanyas, Series & Kahaniya
+        <div class="card" onclick="window.location.href='upanyas.html'">
+            <div class="icon">📚</div>Upanyas
         </div>
-        <div class="card" onclick="window.location='likho.html'">
+        <div class="card" onclick="window.location.href='likho.html'">
             <div class="icon">✍️</div>Likho
         </div>
-        <div class="card" onclick="window.location='kavita.html'">
-            <div class="icon">🪶</div>Kavita, Gazal, Sahitya
+        <div class="card" onclick="window.location.href='kavita.html'">
+            <div class="icon">🪶</div>Kavita
         </div>
-        <div class="card" onclick="window.location='bhakti.html'">
-            <div class="icon">🙏</div>Bhakti, Dharm, Dhyan
+        <div class="card" onclick="window.location.href='bhakti.html'">
+            <div class="icon">🙏</div>Bhakti
         </div>
-        <div class="card" onclick="window.location='suno.html'">
+        <div class="card" onclick="window.location.href='suno.html'">
             <div class="icon">🎧</div>Suno
         </div>
-        <div class="card" onclick="window.location='gyan.html'">
-            <div class="icon">🧠</div>Gyan, Vigyan, Samanya Gyan
+        <div class="card" onclick="window.location.href='gyan.html'">
+            <div class="icon">🧠</div>Gyan
         </div>
-        <div class="card" onclick="window.location='margdarshan.html'">
-            <div class="icon">🧭</div>Margdarshan, Motivational
+        <div class="card" onclick="window.location.href='margdarshan.html'">
+            <div class="icon">🧭</div>Margdarshan
         </div>
-        <div class="card" onclick="window.location='bhasha.html'">
-            <div class="icon">🌐</div>Bhasha, Gyan, Sikhsha
+        <div class="card" onclick="window.location.href='bhasha.html'">
+            <div class="icon">🌐</div>Bhasha
         </div>
-        <!-- GyanDeep AI Card -->
-        <div class="card ai-card" onclick="window.location='ai-chat.html'">
+        <div class="card ai-card" onclick="window.location.href='ai-chat.html'">
             <div class="icon">🤖</div>GyanDeep AI
         </div>
     </div>
 
     <div class="footer">
         GyanDeep v2.2.0 | By Pankaj Singh Sajwan ❤️<br>
-        "AI integrated! All Categories Active."
+        "सभी कैटेगरीज अब सक्रिय हैं"
     </div>
 </body>
 </html>
