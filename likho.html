@@ -52,7 +52,6 @@
 
         <input type="text" id="title" placeholder="Upanyas ka Naam: Jaise 'कोड-लाल-स्याही'">
         <input type="text" id="chapter" placeholder="Episode Number: Jaise 'Ep 1' या सिर्फ '1'">
-
         <select id="bhasha">
             <option value="">Bhasha Chunein</option>
             <option value="Hindi">Hindi - हिंदी</option>
@@ -62,77 +61,9 @@
             <option value="Bhojpuri">Bhojpuri - भोजपुरी</option>
             <option value="Pahadi">Pahadi - पहाड़ी</option>
         </select>
-
-        <textarea id="content" placeholder="Yahan apna Chapter likho Bhumi...
-
-Kitna bhi lamba likh. Cliffhanger last line me rakhna."></textarea>
-
+        <textarea id="content" placeholder="Yahan apna Chapter likho Bhumi..."></textarea>
         <button class="save-btn" onclick="saveChapter()">💾 JSON बनाओ + कॉपी करो</button>
-
         <div class="success-box" id="successBox">
             <b>✅ JSON तैयार!</b><br>
-            नीचे वाला पूरा कॉपी करके GitHub पर जाओ → उपन्यास/कोड-लाल-स्याही/ → ep_001.json बनाओ → पेस्ट करो → Commit<br><br>
             <textarea id="jsonOutput" style="width:100%;height:300px;font-family:monospace"></textarea>
-            <button class="copy-btn" onclick="copyJSON()">📋 Copy JSON</button>
-        </div>
-
-        <div class="note">
-            <b>Note Bhumi:</b> Save दबाते ही JSON बन जाएगा।<br>
-            1. Copy बटन दबाओ<br>
-            2. GitHub → उपन्यास/कोड-लाल-स्याही/ फोल्डर खोलो<br>
-            3. Add file → ep_001.json बनाओ<br>
-            4. पेस्ट करके Commit<br>
-            5. 1 मिनट में Netlify लाइव कर देगा ❤️
-        </div>
-    </div>
-
-    <script>
-        function saveChapter() {
-            let title = document.getElementById('title').value;
-            let chapter = document.getElementById('chapter').value;
-            let bhasha = document.getElementById('bhasha').value;
-            let content = document.getElementById('content').value;
-
-            if(title === '' || content === '' || bhasha === '') {
-                alert('Bhumi, Upanyas ka Naam, Bhasha aur Chapter likhna zaroori hai!');
-                return;
-            }
-
-            // Ep नंबर निकालो - "Ep 3" या "3" दोनों चलेगा
-            let epNo = chapter.match(/\d+/)? chapter.match(/\d+/)[0] : '1';
-            epNo = parseInt(epNo);
-
-            // JSON बनाओ
-            let jsonData = {
-                ep_no: epNo,
-                title: title,
-                bhasha: bhasha,
-                description: content.substring(0, 120) + '...',
-                content: content,
-                cliffhanger: content.split('.').slice(-2,-1)[0].trim() + '.',
-                publish_date: new Date().toISOString().split('T')[0],
-                status: "draft",
-                locked_words: 100
-            };
-
-            let jsonString = JSON.stringify(jsonData, null, 2);
-
-            // बॉक्स में दिखा दो
-            document.getElementById('jsonOutput').value = jsonString;
-            document.getElementById('successBox').style.display = 'block';
-
-            // ऊपर स्क्रॉल कर दो
-            document.getElementById('successBox').scrollIntoView({behavior: 'smooth'});
-        }
-
-        function copyJSON() {
-            let jsonText = document.getElementById('jsonOutput');
-            jsonText.select();
-            document.execCommand('copy');
-
-            let epNo = document.getElementById('chapter').value.match(/\d+/)[0].padStart(3,'0');
-            alert('JSON कॉपी हो गया! अब GitHub पर जाकर ep_' + epNo + '.json में पेस्ट करो');
-        }
-    </script>
-</body>
-</html>
+            <button class="copy-btn" onclick="copyJSON()">📋
