@@ -6,17 +6,40 @@
     <title>मेरी कविताएँ | GyanDeep</title>
     <style>
         body { background: #f0f2f5; padding: 20px; font-family: 'Arial', sans-serif; }
+        
+        /* टॉप बार (होम बटन के लिए) */
+        .top-bar { max-width: 600px; margin: 0 auto 20px auto; }
+        .home-btn { padding: 10px 15px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        
+        /* आपकी मँगल-सेक्शन डिज़ाइन */
         .mangal-section { 
             background: #fdf6e3; padding: 25px; border-radius: 15px; 
             border: 2px solid #d4af37; color: #4a3728; 
-            font-family: 'Georgia', serif; margin-bottom: 20px; 
+            font-family: 'Georgia', serif; margin-bottom: 25px; 
+            max-width: 600px; margin: 0 auto 25px auto; /* पेज के बीच में रखने के लिए */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative; /* कॉपी बटन के लिए जरूरी */
         }
+        
+        /* कॉपी बटन डिज़ाइन */
+        .copy-btn {
+            position: absolute; top: 15px; right: 15px;
+            background: #d4af37; color: white; border: none;
+            padding: 6px 12px; border-radius: 5px; cursor: pointer;
+            font-size: 13px; font-weight: bold; transition: 0.3s;
+        }
+        .copy-btn:hover { background: #b8962e; }
     </style>
 </head>
 <body>
 
+    <!-- होम बटन -->
+    <div class="top-bar">
+        <button class="home-btn" onclick="window.location.href='index.html'">🏠 होम (GyanDeep)</button>
+    </div>
+
     <div id="kavita-container">
-        <p style="text-align: center;">कविताएँ लोड हो रही हैं...</p>
+        <p style="text-align: center; font-size:18px;">कविताएँ लोड हो रही हैं...</p>
     </div>
 
     <script>
@@ -24,14 +47,20 @@
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('kavita-container');
-                container.innerHTML = ''; // लोडिंग टेक्स्ट हटा दें
-                data.forEach(item => {
+                container.innerHTML = ''; 
+                
+                data.forEach((item) => {
                     const div = document.createElement('div');
                     div.className = "mangal-section";
+                    
+                    // कॉपी करने के लिए पूरा टेक्स्ट (शीर्षक, लेखक और कविता) तैयार करना
+                    const fullText = `${item.title}\nलेखक: ${item.author}\n\n${item.content}`;
+                    
                     div.innerHTML = `
+                        <button class="copy-btn" onclick="copyText(this, \`${fullText.replace(/`/g, '\\`')}\`)">📋 कॉपी</button>
                         <h2 style="text-align: center; color: #8b0000; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">${item.title}</h2>
-                        <p style="text-align: center; font-weight: bold;">लेखक: ${item.author}</p>
-                        <div style="white-space: pre-line; line-height: 1.8; margin-top: 20px;">
+                        <p style="text-align: center; font-weight: bold; color: #555;">लेखक: ${item.author}</p>
+                        <div style="white-space: pre-line; line-height: 1.8; margin-top: 20px; font-size: 16px;">
                             ${item.content}
                         </div>
                     `;
@@ -40,8 +69,23 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('kavita-container').innerHTML = "कविताएँ लोड करने में त्रुटि हुई।";
+                document.getElementById('kavita-container').innerHTML = "<p style='text-align:center;'>कविताएँ लोड करने में त्रुटि हुई। कृपया चेक करें कि 'data_kavita.json' उसी फोल्डर में है या नहीं।</p>";
             });
+
+        // कॉपी फंक्शन
+        function copyText(buttonElement, textToCopy) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                let originalText = buttonElement.innerHTML;
+                buttonElement.innerHTML = "✅ हो गया!";
+                buttonElement.style.background = "#28a745"; // हरा रंग
+                
+                // 2 सेकंड बाद वापस सामान्य करना
+                setTimeout(() => {
+                    buttonElement.innerHTML = originalText;
+                    buttonElement.style.background = "#d4af37";
+                }, 2000);
+            });
+        }
     </script>
 </body>
 </html>
