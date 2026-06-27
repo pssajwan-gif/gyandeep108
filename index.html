@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: var(--text); padding: 20px; transition: 0.3s; }
 
-        /* होम व्यू - ग्रिड लेआउट */
+        /* होम व्यू */
         #home-view { max-width: 600px; margin: 0 auto; text-align: center; }
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 30px; }
         .card { background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
@@ -54,10 +54,12 @@
         </div>
     </div>
 
+    <!-- यहाँ से स्क्रिप्ट शुरू हो रही है -->
     <script>
         let currentChapter = 0;
         let bookData = null;
 
+        // डेटा लोड करें
         fetch('kahani.json').then(r => r.json()).then(d => { bookData = d; });
 
         function openReader() {
@@ -88,35 +90,6 @@
             const r = document.getElementById('reader-view');
             r.style.background = (r.style.background === 'rgb(45, 45, 45)') ? 'white' : '#2d2d2d';
             r.style.color = (r.style.color === 'white') ? '#333' : 'white';
-        }
-    </script>
-</body>
-</html>
-            document.getElementById('reader-view').style.display = 'block';
-            displayChapter();
-        }
-
-        function closeReader() {
-            document.getElementById('home-view').style.display = 'block';
-            document.getElementById('reader-view').style.display = 'none';
-        }
-
-        function displayChapter() {
-            if(!bookData) return;
-            const ch = bookData.chapters[currentChapter];
-            document.getElementById('chapter-title').innerText = `अध्याय ${ch.chapter_number}: ${ch.title}`;
-            document.getElementById('chapter-content').innerText = ch.content;
-            document.getElementById('progress-bar').style.width = ((currentChapter+1)/bookData.chapters.length)*100 + "%";
-        }
-
-        function changeChapter(step) {
-            currentChapter = Math.max(0, Math.min(bookData.chapters.length - 1, currentChapter + step));
-            displayChapter();
-        }
-
-        function toggleDarkMode() {
-            document.getElementById('reader-view').style.background = (document.getElementById('reader-view').style.background === 'rgb(45, 45, 45)') ? 'white' : '#2d2d2d';
-            document.getElementById('reader-view').style.color = (document.getElementById('reader-view').style.color === 'white') ? '#333' : 'white';
         }
     </script>
 </body>
