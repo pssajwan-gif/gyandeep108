@@ -3,155 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Likho - GyanDeep</title>
+    <title>अनंत वैभव की गाथा | GyanDeep</title>
     <style>
-        body {
-            font-family: Arial;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; padding: 20px; min-height: 100vh;
-        }
-       .container { max-width: 700px; margin: 0 auto; }
-       .header { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
-       .back-btn {
-            background: rgba(255,255,255,0.2); padding: 10px 15px;
-            border-radius: 8px; text-decoration: none; color: white;
-        }
-        h1 { font-size: 26px; }
-        input, textarea {
-            width: 100%; padding: 15px; margin: 10px 0;
-            border-radius: 8px; border: none; font-size: 16px;
-            box-sizing: border-box; font-family: Arial;
-        }
-        textarea { min-height: 300px; resize: vertical; }
-       .save-btn {
-            background: #ff6b6b; color: white; padding: 15px;
-            border: none; border-radius: 12px; width: 100%;
-            font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px;
-        }
-       .note {
-            background: rgba(255,255,255,0.15); padding: 15px;
-            border-radius: 8px; margin-top: 20px; font-size: 14px;
-        }
-       .success-box {
-            background: rgba(0,255,0,0.2); padding: 15px;
-            border-radius: 8px; margin-top: 15px; display: none;
-        }
+        body { font-family: 'Georgia', serif; padding: 20px; color: #333; background-color: #f9f9f9; }
+        .novel-container { margin-bottom: 50px; border-bottom: 2px solid #d4af37; padding-bottom: 30px; }
+        .novel-chapter { font-family: serif; color: #8b0000; font-size: 28px; font-weight: bold; margin-bottom: 5px; }
+        .novel-title { font-size: 22px; color: #555; margin-top: 0; font-style: italic; }
+        .novel-content { font-size: 19px; line-height: 1.8; white-space: pre-line; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <a href="upanyas.html" class="back-btn">← Back</a>
-            <h1>✍️ Likho - Episode लिखो</h1>
-        </div>
 
-        <input type="text" id="title" placeholder="Episode Title: जैसे 'इकरा का पहला हुक्म'">
-        <input type="text" id="chapter" placeholder="Episode Number: जैसे 'Ep 3' या सिर्फ '3'">
-        <textarea id="content" placeholder="यहाँ पूरी कहानी लिखो Bhumi...
-
-कितना भी लंबा लिखो। cliffhanger लास्ट लाइन में रखना।"></textarea>
-
-        <button class="save-btn" onclick="saveChapter()">💾 JSON बनाओ + कॉपी करो</button>
-
-        <div class="success-box" id="successBox">
-            <b>✅ JSON तैयार!</b><br>
-            नीचे वाला पूरा कॉपी करके GitHub पर जाओ → उपन्यास/कोड-लाल-स्याही/ → ep_003.json बनाओ → पेस्ट करो → Commit<br><br>
-            <textarea id="jsonOutput" style="width:100%;height:300px;font-family:monospace"></textarea>
-            <button onclick="copyJSON()" style="margin-top:10px;padding:10px;background:white;color:#667eea;border:none;border-radius:8px;cursor:pointer;width:100%">📋 Copy JSON</button>
-        </div>
-
-        <div class="note">
-            <b>Note Bhumi:</b> Save दबाते ही JSON बन जाएगा।<br>
-            1. Copy बटन दबाओ<br>
-            2. GitHub → उपन्यास/कोड-लाल-स्याही/ फोल्डर खोलो<br>
-            3. Add file → ep_003.json बनाओ<br>
-            4. पेस्ट करके Commit<br>
-            5. 1 मिनट में Netlify लाइव कर देगा ❤️
-        </div>
-    </div>
+    <div id="content-container">उपन्यास के अध्याय लोड हो रहे हैं...</div>
 
     <script>
-        function saveChapter() {
-            let title = document.getElementById('title').value;
-            let chapter = document.getElementById('chapter').value;
-            let content = document.getElementById('content').value;
-
-            if(title === '' || content === '') {
-                alert('Bhumi, Episode Title और कहानी लिखना जरूरी है!');
-                return;
-            }
-
-            // Ep नंबर निकालो - "Ep 3" या "3" दोनों चलेगा
-            let epNo = chapter.match(/\d+/)? chapter.match(/\d+/)[0] : '1';
-            epNo = parseInt(epNo);
-
-            // JSON बनाओ
-            let jsonData = {
-                ep_no: epNo,
-                title: title,
-                description: content.substring(0, 120) + '...',
-                content: content,
-                cliffhanger: content.split('.').slice(-2,-1)[0].trim() + '.',
-                publish_date: new Date().toISOString().split('T')[0],
-                status: "draft",
-                locked_words: 100
-            };
-
-            let jsonString = JSON.stringify(jsonData, null, 2);
-
-            // बॉक्स में दिखा दो
-            document.getElementById('jsonOutput').value = jsonString;
-            document.getElementById('successBox').style.display = 'block';
-
-            // ऊपर स्क्रॉल कर दो
-            document.getElementById('successBox').scrollIntoView({behavior: 'smooth'});
-        }
-
-        function copyJSON() {
-            let jsonText = document.getElementById('jsonOutput');
-            jsonText.select();
-            document.execCommand('copy');
-            alert('JSON कॉपी हो गया! अब GitHub पर जाकर ep_' +
-                document.getElementById('chapter').value.match(/\d+/)[0].padStart(3,'0') +
-                '.json में पेस्ट करो');
-        }
-    </script>
-</body>
-</html><body>
-    <div class="container">
-        <div class="header">
-            <a href="upanyas.html" class="back-btn">← Back</a>
-            <h1>✍️ Likho - Chapter Jodo</h1>
-        </div>
-
-        <input type="text" id="title" placeholder="Upanyas ka Naam: Jaise 'Antim Kiran'">
-        <input type="text" id="chapter" placeholder="Chapter Number: Jaise 'Chapter 1'">
-        <textarea id="content" placeholder="Yahan apna Chapter likho... 
-
-Bhumi, tu yahan type kar sakti hai. Kitna bhi lamba likh."></textarea>
-        
-        <button class="save-btn" onclick="saveChapter()">💾 Chapter Save Karo</button>
-
-        <div class="note">
-            <b>Note Bhumi:</b> Abhi "Save" dabane par alert aayega.  
-            Next Step me main tujhe bataunga ki ye Chapter GitHub me apne-aap kaise save hoga.  
-            Abhi ke liye tu likh kar test kar le ❤️
-        </div>
-    </div>
-
-    <script>
-        function saveChapter() {
-            let title = document.getElementById('title').value;
-            let chapter = document.getElementById('chapter').value;
-            let content = document.getElementById('content').value;
-            
-            if(title === '' || content === '') {
-                alert('Bhumi, Upanyas ka Naam aur Chapter likhna zaroori hai!');
-                return;
-            }
-            
-            alert('Shabash Bhumi! Chapter Ready Hai:\n\nUpanyas: ' + title + '\nChapter: ' + chapter + '\n\nAgla Step: Main isko GitHub me save karna sikhaunga!');
-        }
+      fetch('data_upanyas.json')
+        .then(response => response.json())
+        .then(data => {
+          let html = '';
+          data.forEach(item => {
+            html += `
+              <div class="novel-container">
+                <p class="novel-chapter">${item.chapter}</p>
+                <p class="novel-title">${item.title}</p>
+                <div class="novel-content">${item.content}</div>
+              </div>
+            `;
+          });
+          document.getElementById('content-container').innerHTML = html;
+        })
+        .catch(error => {
+          document.getElementById('content-container').innerHTML = 'अभी उपन्यास उपलब्ध नहीं है।';
+        });
     </script>
 </body>
 </html>
