@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मेरे उपन्यास</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; color: #333; }
+        .novel-container { margin-bottom: 40px; border-bottom: 1px solid #ddd; padding-bottom: 20px;}
+        .novel-title { font-family: serif; color: #2c3e50; font-size: 26px; font-weight: bold; margin-bottom: 5px; }
+        .novel-genre { font-size: 16px; color: #7f8c8d; font-style: italic; margin-top: 0; }
+        .novel-content { font-family: serif; font-size: 19px; line-height: 1.8; white-space: pre-line; }
+    </style>
+</head>
+<body>
+
+    <div id="content-container">उपन्यास लोड हो रहे हैं...</div>
+
+    <script>
+      const url = 'data_upanyas.json'; // डेटा फाइल का नाम
+
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('डेटा लोड करने में समस्या: ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          let html = '';
+          data.forEach(item => {
+            html += `
+              <div class="novel-container">
+                <p class="novel-title">${item.title}</p>
+                <p class="novel-genre">शैली: ${item.genre}</p>
+                <p class="novel-content">${item.content}</p>
+              </div>
+            `;
+          });
+          document.getElementById('content-container').innerHTML = html;
+        })
+        .catch(error => {
+          console.error(error);
+          document.getElementById('content-container').innerHTML = 'उपन्यास लोड नहीं हो पाए: ' + error.message;
+        });
+    </script>
+
+</body>
+</html>
