@@ -3,85 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GyanDeep - Padho, Suno, Likho</title>
+    <title>GyanDeep - अनंत वैभव</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: Arial, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh; color: white; padding: 20px;
-        }
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { font-size: 32px; margin-bottom: 5px; }
-        .header p { opacity: 0.9; font-size: 16px; }
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 15px; 
-            max-width: 600px; 
-            margin: 0 auto;
-        }
-        .card { 
-            background: rgba(255,255,255,0.15); 
-            padding: 20px; 
-            border-radius: 15px; 
-            text-align: center; 
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .card:hover { background: rgba(255,255,255,0.25); transform: scale(1.05); }
-        .ai-card { 
-            background: rgba(0, 0, 0, 0.4); 
-            border: 2px solid #00d4ff; 
-        }
-        .icon { font-size: 40px; margin-bottom: 10px; }
-        .footer { text-align: center; margin-top: 40px; opacity: 0.8; font-size: 14px; line-height: 1.6; }
+        :root { --bg: #f9f9f9; --text: #333; --box: white; --accent: #764ba2; }
+        .dark { --bg: #1a1a1a; --text: #e0e0e0; --box: #2d2d2d; }
+        
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; transition: 0.3s; }
+        
+        /* Reader Styling */
+        #reader-view { display: none; max-width: 800px; margin: auto; background: var(--box); padding: 20px; border-radius: 15px; color: var(--text); }
+        .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        
+        /* Grid Styling */
+        #home-view { max-width: 600px; margin: auto; text-align: center; color: white; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 30px; }
+        .card { background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="header">
+
+    <!-- Home View -->
+    <div id="home-view">
         <h1>🪔 GyanDeep</h1>
-        <p>Padho, Suno, Likho - सब एक जगह</p>
-    </div>
-
-    <div class="grid">
-        <div class="card" onclick="window.location.href='upanyas.html'">
-            <div class="icon">📚</div>Upanyas
-        </div>
-        <div class="card" onclick="window.location.href='likho.html'">
-            <div class="icon">✍️</div>Likho
-        </div>
-        <div class="card" onclick="window.location.href='kavita.html'">
-            <div class="icon">🪶</div>Kavita
-        </div>
-        <div class="card" onclick="window.location.href='bhakti.html'">
-            <div class="icon">🙏</div>Bhakti
-        </div>
-        <div class="card" onclick="window.location.href='suno.html'">
-            <div class="icon">🎧</div>Suno
-        </div>
-        <div class="card" onclick="window.location.href='gyan.html'">
-            <div class="icon">🧠</div>Gyan
-        </div>
-        <div class="card" onclick="window.location.href='margdarshan.html'">
-            <div class="icon">🧭</div>Margdarshan
-        </div>
-        <div class="card" onclick="window.location.href='bhasha.html'">
-            <div class="icon">🌐</div>Bhasha
-        </div>
-        <div class="card ai-card" onclick="window.location.href='ai-chat.html'">
-            <div class="icon">🤖</div>GyanDeep AI
+        <div class="grid">
+            <div class="card" onclick="openReader()">📚 Upanyas (अनंत वैभव)</div>
+            <!-- अन्य कार्ड्स यहाँ जोड़ें -->
         </div>
     </div>
 
-    <div class="footer">
-        GyanDeep v2.2.0 | By Pankaj Singh Sajwan ❤️<br>
-        "सभी कैटेगरीज अब सक्रिय हैं"
+    <!-- Reader View -->
+    <div id="reader-view">
+        <div class="controls">
+            <button onclick="closeReader()">🏠 होम</button>
+            <button onclick="changeFontSize(2)">A+</button>
+            <button onclick="changeFontSize(-2)">A-</button>
+            <button onclick="toggleDarkMode()">🌓 थीम</button>
+        </div>
+        <div id="progress-bar" style="height:5px; background:var(--accent); width:0%;"></div>
+        <h2 id="chapter-title"></h2>
+        <div id="chapter-content"></div>
+        <button onclick="changeChapter(-1)">पिछला</button>
+        <button onclick="changeChapter(1)">अगला</button>
     </div>
+
+    <script>
+        // आपका JSON डेटा (अध्याय 1 से 19 तक)
+        let bookData = { "chapters": [ /* यहाँ अपना पूरा JSON भरें */ ] };
+        let currentChapter = 0;
+
+        function openReader() {
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('reader-view').style.display = 'block';
+            displayChapter();
+        }
+
+        function closeReader() {
+            document.getElementById('home-view').style.display = 'block';
+            document.getElementById('reader-view').style.display = 'none';
+        }
+
+        function displayChapter() {
+            const ch = bookData.chapters[currentChapter];
+            document.getElementById('chapter-title').innerText = `अध्याय ${ch.chapter_number}: ${ch.title}`;
+            document.getElementById('chapter-content').innerText = ch.content;
+            document.getElementById('progress-bar').style.width = ((currentChapter+1)/bookData.chapters.length)*100 + "%";
+        }
+
+        function toggleDarkMode() { document.body.classList.toggle('dark'); }
+        function changeFontSize(s) { document.getElementById('chapter-content').style.fontSize = "large"; }
+        function changeChapter(step) {
+            currentChapter = Math.max(0, Math.min(bookData.chapters.length - 1, currentChapter + step));
+            displayChapter();
+        }
+    </script>
 </body>
 </html>
