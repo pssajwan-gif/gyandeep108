@@ -5,13 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GyanDeep AI Chat</title>
     <style>
-        body { margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; }
-        .back-btn { background: #764ba2; color: white; padding: 10px; text-align: center; text-decoration: none; font-weight: bold; }
-        iframe { flex-grow: 1; border: none; width: 100%; }
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f9; }
+        #chat-container { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input { width: 80%; padding: 10px; }
+        button { padding: 10px; background: #764ba2; color: white; border: none; cursor: pointer; }
+        #response { margin-top: 20px; padding: 10px; border-top: 1px solid #ccc; min-height: 50px; }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-btn">⬅ वापस होम पेज पर जाएं</a>
-    <iframe src="https://gemini.google.com/"></iframe>
+
+<div id="chat-container">
+    <h2>GyanDeep AI से पूछें</h2>
+    <input type="text" id="userInput" placeholder="अपना सवाल यहाँ लिखें...">
+    <button onclick="getAIResponse()">भेजें</button>
+    <div id="response">जवाब यहाँ दिखेगा...</div>
+</div>
+
+<script type="module">
+  import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+  // अपनी API Key यहाँ डालें
+  const API_KEY = "apikey"; 
+
+  window.getAIResponse = async () => {
+    const userInput = document.getElementById("userInput").value;
+    const responseDiv = document.getElementById("response");
+    
+    if(!userInput) return;
+    
+    responseDiv.innerText = "सोच रहा हूँ...";
+
+    try {
+      const genAI = new GoogleGenerativeAI(API_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+      const result = await model.generateContent(userInput);
+      responseDiv.innerText = result.response.text();
+    } catch (error) {
+      responseDiv.innerText = "माफ़ कीजिए, कुछ गलती हुई। कृपया फिर से प्रयास करें।";
+      console.error(error);
+    }
+  }
+</script>
+
 </body>
 </html>
