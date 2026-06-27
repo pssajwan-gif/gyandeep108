@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>GyanDeep Admin Panel</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f9; }
+        textarea { width: 100%; height: 200px; margin-top: 10px; }
+        input { width: 100%; padding: 10px; margin-top: 10px; }
+        button { padding: 15px; margin-top: 20px; background: #764ba2; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>नया अध्याय जोड़ें</h2>
+    <input type="number" id="chNum" placeholder="अध्याय संख्या (जैसे 1, 2, 3)">
+    <input type="text" id="chTitle" placeholder="अध्याय का शीर्षक">
+    <textarea id="chContent" placeholder="यहाँ अपनी कहानी पेस्ट करें..."></textarea>
+    <button onclick="generateJSON()">JSON कोड बनाएँ</button>
+
+    <h3>कॉपी करने के लिए JSON कोड:</h3>
+    <textarea id="output" readonly></textarea>
+
+    <script>
+        function generateJSON() {
+            const chapter = {
+                "chapter_number": parseInt(document.getElementById('chNum').value),
+                "title": document.getElementById('chTitle').value,
+                "content": document.getElementById('chContent').value
+            };
+            document.getElementById('output').value = JSON.stringify(chapter, null, 2);
+        }
+    </script>
+</body>
+</html>
