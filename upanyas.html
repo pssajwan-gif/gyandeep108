@@ -2,43 +2,38 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>अनन्या: अनंत वैभव की गाथा</title>
+    <title>अनंत वैभव की गाथा</title>
     <style>
-        body { font-family: 'Arial', sans-serif; line-height: 1.8; color: #333; max-width: 800px; margin: auto; padding: 20px; background-color: #fdfaf6; }
-        h1 { text-align: center; color: #b8860b; border-bottom: 2px solid #b8860b; padding-bottom: 10px; }
-        h2 { color: #8b4513; margin-top: 30px; }
-        p { margin-bottom: 15px; text-align: justify; }
-        .chapter { margin-bottom: 50px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: auto; }
+        .chapter { margin-bottom: 40px; border-bottom: 1px solid #ccc; padding-bottom: 20px; }
+        h1 { text-align: center; color: #d35400; }
+        h2 { color: #2c3e50; }
     </style>
 </head>
 <body>
 
-    <h1>अनन्या: अनंत वैभव की गाथा</h1>
+    <h1 id="book-title"></h1>
+    <div id="chapters-container"></div>
 
-    <!-- अध्यायों को यहाँ पिरोया गया है -->
-    <div class="chapter">
-        <h2>अध्याय 1-19 तक का संपूर्ण सार</h2>
-        <p>यह गाथा अनन्या के उदय, उसके द्वारा राज्य में 'मंथन' के प्रयोग, 'श्री सूक्त' की महिमा, समय के अनुशासन (महाकाल की वेदी), और अंततः 'मणबसा' व 'वैभव लक्ष्मी' के व्रत को एक जीवन-दर्शन के रूप में स्थापित करने की है। यह केवल एक राज्य की कहानी नहीं, बल्कि 'दरिद्रता से पूर्णता' की ओर मनुष्य की आंतरिक यात्रा है।</p>
-    </div>
-
-    <div class="chapter">
-        <h2>गाथा का सार-सूत्र</h2>
-        <p><em>"धर्मो रक्षति रक्षितः"</em> - अनन्या ने सिद्ध किया कि जो समय का सम्मान करता है, उसके पास लक्ष्मी स्वयं आती हैं। आज राज्य का हर घर एक मंदिर है, और हर नागरिक एक 'समय-सिद्ध' पुरुष।</p>
-    </div>
-
-</body>
-</html>
-
-        <div class="chapter-container">
-            <h2 class="chapter-title">अध्याय 18: मणबसा और वैभव लक्ष्मी—स्थिर लक्ष्मी के दो पावन स्तंभ</h2>
-            <div class="content">अनन्या के चले जाने के बाद, राज्य में अब एक अलौकिक अनुशासन का युग था... (आपका विस्तृत पाठ)</div>
-        </div>
-
-        <div class="chapter-container">
-            <h2 class="chapter-title">अध्याय 19: उद्यापन का महा-पर्व—सामूहिकता में लक्ष्मी का वास</h2>
-            <div class="content">मार्गशीर्ष का वह अंतिम गुरुवार आ पहुँचा था, जिसका राज्य की प्रत्येक नारी और प्रत्येक गृहस्थ को पूरे वर्ष प्रतीक्षा रहती थी... (आपका विस्तृत पाठ)</div>
-        </div>
-
-    </div>
+    <script>
+        // JSON फाइल को लोड करना
+        fetch('kahani.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('book-title').innerText = data.book_title;
+                const container = document.getElementById('chapters-container');
+                
+                data.chapters.forEach(chapter => {
+                    const chapterDiv = document.createElement('div');
+                    chapterDiv.className = 'chapter';
+                    chapterDiv.innerHTML = `
+                        <h2>अध्याय ${chapter.chapter_number}: ${chapter.title}</h2>
+                        <p>${chapter.content}</p>
+                    `;
+                    container.appendChild(chapterDiv);
+                });
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+    </script>
 </body>
 </html>
