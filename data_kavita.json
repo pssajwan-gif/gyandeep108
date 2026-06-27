@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मेरी कविताएँ</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; color: #333; }
+        .poem-container { margin-bottom: 40px; border-bottom: 1px solid #ddd; padding-bottom: 20px; }
+        .poem-title { font-family: serif; color: #2c3e50; font-size: 26px; font-weight: bold; margin-bottom: 5px;}
+        .poem-author { font-size: 16px; color: #7f8c8d; margin-top: 0;}
+        .poem-content { font-family: serif; font-size: 19px; line-height: 1.8; white-space: pre-line; }
+    </style>
+</head>
+<body>
+
+    <div id="content-container">कविताएँ लोड हो रही हैं...</div>
+
+    <script>
+      const url = 'data_kavita.json'; // डेटा फाइल का नाम
+
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('डेटा लोड करने में समस्या: ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          let html = '';
+          data.forEach(item => {
+            html += `
+              <div class="poem-container">
+                <p class="poem-title">${item.title}</p>
+                <p class="poem-author">द्वारा: ${item.author}</p>
+                <p class="poem-content">${item.content}</p>
+              </div>
+            `;
+          });
+          document.getElementById('content-container').innerHTML = html;
+        })
+        .catch(error => {
+          console.error(error);
+          document.getElementById('content-container').innerHTML = 'कविताएँ लोड नहीं हो पाईं: ' + error.message;
+        });
+    </script>
+
+</body>
+</html>
