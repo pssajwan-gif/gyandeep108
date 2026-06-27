@@ -9,27 +9,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: var(--text); padding: 20px; transition: 0.3s; }
 
-        /* होम व्यू - ग्रिड लेआउट */
         #home-view { max-width: 600px; margin: 0 auto; text-align: center; }
-        .header { margin-bottom: 30px; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .logo { width: 100px; border-radius: 50%; margin-bottom: 10px; border: 3px solid white; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 30px; }
         .card { background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .card:hover { background: rgba(255,255,255,0.25); transform: scale(1.05); }
 
-        /* रीडर व्यू */
         #reader-view { display: none; max-width: 800px; margin: 0 auto; background: white; color: #333; padding: 20px; border-radius: 15px; }
         .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 5px; background: var(--accent); color: white; }
+        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 5px; background: var(--accent); color: white; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- होम व्यू -->
     <div id="home-view">
-        <div class="header">
-            <h1>🪔 GyanDeep</h1>
-            <p>Padho, Suno, Likho</p>
-        </div>
+        <img src="logo.png" alt="Logo" class="logo">
+        <h1>🪔 GyanDeep</h1>
+        <p>Padho, Suno, Likho</p>
         <div class="grid">
             <div class="card" onclick="openReader()">📚 उपन्यास</div>
             <div class="card" onclick="window.location.href='kavita.html'">🪶 Kavita</div>
@@ -43,11 +39,13 @@
         </div>
     </div>
 
-    <!-- उपन्यास रीडर व्यू -->
     <div id="reader-view">
         <div class="controls">
             <button onclick="closeReader()">🏠 होम</button>
             <button onclick="toggleDarkMode()">🌓 थीम</button>
+            <a id="whatsapp-share" target="_blank" style="text-decoration:none;">
+                <button style="background:#25D366;">WhatsApp पर शेयर करें</button>
+            </a>
         </div>
         <div id="progress-bar" style="height:5px; background:var(--accent); width:0%;"></div>
         <h2 id="chapter-title" style="margin-top:15px;"></h2>
@@ -58,12 +56,10 @@
         </div>
     </div>
 
-    <!-- स्क्रिप्ट सेक्शन -->
     <script>
         let currentChapter = 0;
         let bookData = null;
 
-        // डेटा लोड करें
         fetch('kahani.json').then(r => r.json()).then(d => { bookData = d; });
 
         function openReader() {
@@ -83,6 +79,10 @@
             document.getElementById('chapter-title').innerText = `अध्याय ${ch.chapter_number}: ${ch.title}`;
             document.getElementById('chapter-content').innerText = ch.content;
             document.getElementById('progress-bar').style.width = ((currentChapter+1)/bookData.chapters.length)*100 + "%";
+            
+            // शेयर लिंक अपडेट करें
+            const shareText = `GyanDeep पर पढ़ें: ${ch.title}`;
+            document.getElementById('whatsapp-share').href = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
         }
 
         function changeChapter(step) {
