@@ -1,49 +1,7 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>मेरी कविताएँ</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; color: #333; }
-        .poem-container { margin-bottom: 40px; border-bottom: 1px solid #ddd; padding-bottom: 20px; }
-        .poem-title { font-family: serif; color: #2c3e50; font-size: 26px; font-weight: bold; margin-bottom: 5px;}
-        .poem-author { font-size: 16px; color: #7f8c8d; margin-top: 0;}
-        .poem-content { font-family: serif; font-size: 19px; line-height: 1.8; white-space: pre-line; }
-    </style>
-</head>
-<body>
-
-    <div id="content-container">कविताएँ लोड हो रही हैं...</div>
-
-    <script>
-      const url = 'data_kavita.json'; // डेटा फाइल का नाम
-
-      fetch(url)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('डेटा लोड करने में समस्या: ' + response.statusText);
-          }
-          return response.json();
-        })
-        .then(data => {
-          let html = '';
-          data.forEach(item => {
-            html += `
-              <div class="poem-container">
-                <p class="poem-title">${item.title}</p>
-                <p class="poem-author">द्वारा: ${item.author}</p>
-                <p class="poem-content">${item.content}</p>
-              </div>
-            `;
-          });
-          document.getElementById('content-container').innerHTML = html;
-        })
-        .catch(error => {
-          console.error(error);
-          document.getElementById('content-container').innerHTML = 'कविताएँ लोड नहीं हो पाईं: ' + error.message;
-        });
-    </script>
-
-</body>
-</html>
+[
+  {
+    "title": "माँ की ममता",
+    "author": "पंकज सिंह",
+    "content": "माँ की ममता सागर जैसी, गहरी और अथाह है,\nउसके चरणों में बसता, जीवन का हर चाह है।\n\nखुद भूखी रह जाती लेकिन, बच्चों को खिलाती है,\nदुख की हर परछाईं से, आँचल में छिपाती है।\n\nजब भी ठोकर लगती हमको, माँ सबसे पहले रोती है,\nहमारी छोटी सी पीड़ा पर, उसकी आँखें भिगोती हैं।\n\nरात-रात भर जाग-जागकर, सपनों को संवारती है,\nअपने सारे सुख त्यागकर, जीवन हमारा वारती है।\n\nमाँ की बातें मीठी लगतीं, जैसे शहद की धारा हो,\nउसकी वाणी में लगता है, जैसे प्रेम का तारा हो।\n\nधूप कड़ी जब जीवन में हो, माँ छाया बन जाती है,\nसूनी राहों के काँटों में, खुशबू बन मुस्काती है।\n\nईश्वर का सबसे सुंदर रूप, माँ के चेहरे में दिखता है,\nउसके आशीषों से ही, हर बिगड़ा काम सँवरता है।\n\nधरती पर यदि स्वर्ग कहीं है, माँ के हृदय में मिलता है,\nउसकी ममता के आगे तो, हर वैभव भी झुकता है।\n\nनमन करूँ उस जननी को, जिसने जीवन दान दिया,\nमाँ ने अपने प्रेम से हमको, जीने का वरदान दिया।"
+  }
+]
