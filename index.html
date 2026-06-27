@@ -5,50 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GyanDeep - Padho, Suno, Likho</title>
     <style>
-        :root { --bg-color: #667eea; --box: rgba(255,255,255,0.15); --text: white; }
+        :root { --accent: #764ba2; --text: white; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: var(--text); padding: 20px; }
+        body { font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: var(--text); padding: 20px; transition: 0.3s; }
 
-        /* Home View Styles */
+        /* होम व्यू */
         #home-view { max-width: 600px; margin: 0 auto; text-align: center; }
-        .header { margin-bottom: 30px; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .card { background: var(--box); padding: 20px; border-radius: 15px; cursor: pointer; transition: 0.3s; font-weight: bold; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 30px; }
+        .card { background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .card:hover { background: rgba(255,255,255,0.25); transform: scale(1.05); }
 
-        /* Reader View Styles */
+        /* रीडर व्यू */
         #reader-view { display: none; max-width: 800px; margin: 0 auto; background: white; color: #333; padding: 20px; border-radius: 15px; }
-        .controls { display: flex; gap: 5px; margin-bottom: 15px; flex-wrap: wrap; }
-        button { padding: 8px 12px; cursor: pointer; border: none; border-radius: 5px; background: #764ba2; color: white; }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        button { padding: 10px 15px; cursor: pointer; border: none; border-radius: 5px; background: var(--accent); color: white; }
     </style>
 </head>
 <body>
 
+    <!-- होम व्यू -->
     <div id="home-view">
-        <div class="header"><h1>🪔 GyanDeep</h1><p>Padho, Suno, Likho</p></div>
+        <h1>🪔 GyanDeep</h1>
         <div class="grid">
             <div class="card" onclick="openReader()">📚 Upanyas (अनंत वैभव)</div>
+            <div class="card" onclick="window.location.href='kavita.html'">🪶 Kavita</div>
             <div class="card" onclick="alert('Coming Soon')">✍️ Likho</div>
-            <div class="card" onclick="alert('Coming Soon')">🪶 Kavita</div>
             <div class="card" onclick="alert('Coming Soon')">🙏 Bhakti</div>
             <div class="card" onclick="alert('Coming Soon')">🎧 Suno</div>
-            <div class="card" onclick="alert('Coming Soon')">🧠 Gyan</div>
-            <div class="card" onclick="alert('Coming Soon')">🧭 Margdarshan</div>
-            <div class="card" onclick="alert('Coming Soon')">🌐 Bhasha</div>
-            <div class="card" onclick="alert('Coming Soon')">🤖 AI Chat</div>
         </div>
     </div>
 
+    <!-- उपन्यास रीडर व्यू -->
     <div id="reader-view">
         <div class="controls">
             <button onclick="closeReader()">🏠 होम</button>
-            <button onclick="changeFontSize(2)">A+</button>
-            <button onclick="changeFontSize(-2)">A-</button>
-            <button onclick="toggleDarkMode()">🌓 नाइट</button>
+            <button onclick="toggleDarkMode()">🌓 थीम</button>
         </div>
-        <div id="progress-bar" style="height:5px; background:#764ba2; width:0%;"></div>
-        <h2 id="chapter-title"></h2>
-        <div id="chapter-content" style="margin-top:15px; font-size:18px;"></div>
+        <div id="progress-bar" style="height:5px; background:var(--accent); width:0%;"></div>
+        <h2 id="chapter-title" style="margin-top:15px;"></h2>
+        <div id="chapter-content" style="margin-top:15px; font-size:18px; line-height:1.8;"></div>
         <div style="margin-top:20px;">
             <button onclick="changeChapter(-1)">पिछला</button>
             <button onclick="changeChapter(1)">अगला</button>
@@ -59,7 +54,8 @@
         let currentChapter = 0;
         let bookData = null;
 
-        fetch('kahani.json').then(r => r.json()).then(data => { bookData = data; });
+        // उपन्यास का डेटा लोड करें
+        fetch('kahani.json').then(r => r.json()).then(d => { bookData = d; });
 
         function openReader() {
             document.getElementById('home-view').style.display = 'none';
@@ -73,6 +69,7 @@
         }
 
         function displayChapter() {
+            if(!bookData) return;
             const ch = bookData.chapters[currentChapter];
             document.getElementById('chapter-title').innerText = `अध्याय ${ch.chapter_number}: ${ch.title}`;
             document.getElementById('chapter-content').innerText = ch.content;
@@ -84,12 +81,9 @@
             displayChapter();
         }
 
-        function toggleDarkMode() { document.body.style.background = (document.body.style.background === 'black') ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'black'; }
-        
-        function changeFontSize(s) {
-            let el = document.getElementById('chapter-content');
-            let size = parseInt(window.getComputedStyle(el).fontSize);
-            el.style.fontSize = (size + s) + 'px';
+        function toggleDarkMode() {
+            document.getElementById('reader-view').style.background = (document.getElementById('reader-view').style.background === 'rgb(45, 45, 45)') ? 'white' : '#2d2d2d';
+            document.getElementById('reader-view').style.color = (document.getElementById('reader-view').style.color === 'white') ? '#333' : 'white';
         }
     </script>
 </body>
