@@ -9,9 +9,10 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: var(--text); padding: 20px; transition: 0.3s; }
 
-        /* होम व्यू */
+        /* होम व्यू - ग्रिड लेआउट */
         #home-view { max-width: 600px; margin: 0 auto; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 30px; }
+        .header { margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .card { background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .card:hover { background: rgba(255,255,255,0.25); transform: scale(1.05); }
 
@@ -25,9 +26,12 @@
 
     <!-- होम व्यू -->
     <div id="home-view">
-        <h1>🪔 GyanDeep</h1>
+        <div class="header">
+            <h1>🪔 GyanDeep</h1>
+            <p>Padho, Suno, Likho</p>
+        </div>
         <div class="grid">
-            <div class="card" onclick="openReader()">📚 Upanyas (अनंत वैभव)</div>
+            <div class="card" onclick="openReader()">📚 उपन्यास</div>
             <div class="card" onclick="window.location.href='kavita.html'">🪶 Kavita</div>
             <div class="card" onclick="alert('Coming Soon')">✍️ Likho</div>
             <div class="card" onclick="alert('Coming Soon')">🙏 Bhakti</div>
@@ -54,7 +58,7 @@
         </div>
     </div>
 
-    <!-- यहाँ से स्क्रिप्ट शुरू हो रही है -->
+    <!-- स्क्रिप्ट सेक्शन -->
     <script>
         let currentChapter = 0;
         let bookData = null;
