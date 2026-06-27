@@ -2,7 +2,8 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>मेरी कविताएँ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मेरी कविताएँ | GyanDeep</title>
     <style>
         body { background: #f0f2f5; padding: 20px; font-family: 'Arial', sans-serif; }
         .mangal-section { 
@@ -15,13 +16,15 @@
 <body>
 
     <div id="kavita-container">
-        </div>
+        <p style="text-align: center;">कविताएँ लोड हो रही हैं...</p>
+    </div>
 
     <script>
         fetch('data_kavita.json')
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('kavita-container');
+                container.innerHTML = ''; // लोडिंग टेक्स्ट हटा दें
                 data.forEach(item => {
                     const div = document.createElement('div');
                     div.className = "mangal-section";
@@ -34,6 +37,10 @@
                     `;
                     container.appendChild(div);
                 });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('kavita-container').innerHTML = "कविताएँ लोड करने में त्रुटि हुई।";
             });
     </script>
 </body>
