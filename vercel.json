@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "ai-chat.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/ai-chat.html"
+    }
+  ]
+}
