@@ -1,40 +1,64 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GyanDeep AI Chat</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; background: #f4f4f9; }
-        #chat-container { max-width: 500px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input { width: 80%; padding: 10px; }
-        button { padding: 10px; background: #764ba2; color: white; border: none; cursor: pointer; }
-        #response { margin-top: 20px; padding: 10px; border-top: 1px solid #ccc; min-height: 50px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GyanDeep AI - Free</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+    .chat-container { max-width: 600px; margin: auto; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .header { background: #FF5722; color: white; padding: 15px; text-align: center; font-size: 20px; border-radius: 10px 10px 0 0; }
+    .chat-box { height: 400px; overflow-y: auto; padding: 15px; }
+    .msg { margin: 10px 0; padding: 10px; border-radius: 10px; max-width: 80%; }
+    .user { background: #DCF8C6; margin-left: auto; text-align: right; }
+    .bot { background: #e5e5ea; }
+    .input-area { display: flex; padding: 10px; border-top: 1px solid #ddd; }
+    input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 20px; outline: none; }
+    button { margin-left: 10px; padding: 10px 15px; background: #FF5722; color: white; border: none; border-radius: 20px; }
+  </style>
 </head>
 <body>
+  <div class="chat-container">
+    <div class="header">🤖 GyanDeep AI - Free Version</div>
+    <div class="chat-box" id="chatBox">
+      <div class="msg bot">नमस्ते Pankaj जी! मैं GyanDeep AI हूँ। मुझसे कुछ भी पूछो।</div>
+    </div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="अपना सवाल लिखें..." onkeydown="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()">भेजें</button>
+    </div>
+  </div>
 
-<div id="chat-container">
-    <h2>GyanDeep AI से पूछें</h2>
-    <input type="text" id="userInput" placeholder="अपना सवाल यहाँ लिखें...">
-    <button onclick="getAIResponse()">भेजें</button>
-    <div id="response">जवाब यहाँ दिखेगा...</div>
-</div>
+  <script>
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
 
-<script type="module">
-  import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+    async function sendMessage() {
+      const question = userInput.value.trim();
+      if (!question) return;
 
-  // अपनी API Key यहाँ डालें
-  const API_KEY = "AQ.Ab8RN6KgSKRgcGr2ptkvl8WQ-EL36Iyywnd19MQEAFZExvnKFA"; 
+      // User का Message दिखाओ
+      chatBox.innerHTML += `<div class="msg user">${question}</div>`;
+      userInput.value = '';
+      chatBox.innerHTML += `<div class="msg bot" id="loading">सोच रहा हूँ...</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
 
-  window.getAIResponse = async () => {
-    const userInput = document.getElementById("userInput").value;
-    const responseDiv = document.getElementById("response");
-    
-    if(!userInput) return;
-    
-    responseDiv.innerText = "सोच रहा हूँ...";
-
+      try {
+        // बिना Key वाला Free API
+        const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(question)}`);
+        const answer = await response.text();
+        
+        document.getElementById('loading').remove();
+        chatBox.innerHTML += `<div class="msg bot">${answer}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (error) {
+        document.getElementById('loading').remove();
+        chatBox.innerHTML += `<div class="msg bot">माफ करना, अभी जवाब नहीं दे पा रहा। फिर से Try करो।</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
     try {
       const genAI = new GoogleGenerativeAI(API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
