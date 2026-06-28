@@ -33,6 +33,9 @@
   </div>
 
   <script>
+    // 👇 यहाँ अपनी Google API Key डालो - AQ से शुरू वाली भी चलेगी
+    const API_KEY = "AQ.Ab8RN6KlTZnCTEQWNLuA_fiqRjIhW6jqNiUi3IMzFwN0sguerg"; // यहाँ Copy की हुई पूरी Key Paste करो
+    
     // Markdown को HTML में बदलने का छोटा Function
     function formatMarkdown(text) {
       return text
@@ -65,11 +68,19 @@
       chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
-        const prompt = `Answer in detailed Hindi: ${question}`;
-        const apiUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(`https://text.pollinations.ai/prompt/${encodeURIComponent(prompt)}`);
+        // 🔥 ये 2 लाइन बदल गई हैं - अब Google Gemini चलेगा
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
         
-        const response = await fetch(apiUrl);
-        let answer = await response.text();
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: `Answer in detailed Hindi: ${question}` }] }]
+          })
+        });
+        
+        const data = await response.json();
+        let answer = data.candidates[0].content.parts[0].text;
         
         // Fix: Markdown को सुंदर HTML में बदलो
         const formattedAnswer = formatMarkdown(answer);
@@ -79,7 +90,8 @@
         
       } catch (error) {
         loadingMsg.remove();
-        chatBox.innerHTML += `<div class="msg bot">Pankaj जी, Server Busy है। 1 मिनट बाद फिर Try करो।</div>`;
+        chatBox.innerHTML += `<div class="msg bot">Pankaj जी, API में दिक्कत है। Key सही डाली है ना? 1 मिनट बाद फिर Try करो।</div>`;
+        console.log(error);
       }
       
       chatBox.scrollTop = chatBox.scrollHeight;
