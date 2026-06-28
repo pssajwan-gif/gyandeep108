@@ -42,35 +42,3 @@
       userInput.value = '';
       chatBox.innerHTML += `<div class="msg bot" id="loading">सोच रहा हूँ...</div>`;
       chatBox.scrollTop = chatBox.scrollHeight;
-
-      try {
-        // बिना Key वाला Free API
-        const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(question)}`);
-        const answer = await response.text();
-        
-        document.getElementById('loading').remove();
-        chatBox.innerHTML += `<div class="msg bot">${answer}</div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
-      } catch (error) {
-        document.getElementById('loading').remove();
-        chatBox.innerHTML += `<div class="msg bot">माफ करना, अभी जवाब नहीं दे पा रहा। फिर से Try करो।</div>`;
-      }
-    }
-  </script>
-</body>
-</html>
-    try {
-      const genAI = new GoogleGenerativeAI(API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-      const result = await model.generateContent(userInput);
-      responseDiv.innerText = result.response.text();
-    } catch (error) {
-      responseDiv.innerText = "माफ़ कीजिए, कुछ गलती हुई। कृपया फिर से प्रयास करें।";
-      console.error(error);
-    }
-  }
-</script>
-
-</body>
-</html>
