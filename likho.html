@@ -74,10 +74,10 @@
     </div>
 
     <script>
-        // === ये 3 चीज़ें आपको AnyThingLLM से लेनी हैं ===
-        const ANYTHING_LLM_URL = "https://your-app.onrender.com"; // Render वाला Link
-        const API_KEY = "YOUR_API_KEY_HERE"; // Settings → API Keys से मिलेगा
-        const WORKSPACE_SLUG = "gyandeep108"; // आपका Workspace नाम
+        // === ये 3 चीज़ें बदलनी हैं ===
+        const ANYTHING_LLM_URL = "https://your-app.onrender.com"; // अपना Render Link
+        const API_KEY = "YOUR_API_KEY_HERE"; // AnyThingLLM Settings से
+        const WORKSPACE_SLUG = "gyandeep108"; // Workspace का slug, नाम नहीं
 
         async function publishToAI() {
             const title = document.getElementById('title').value.trim();
@@ -93,6 +93,11 @@
                 return;
             }
 
+            if (ANYTHING_LLM_URL.includes("your-app") || API_KEY === "YOUR_API_KEY_HERE") {
+                alert('पहले Code में ANYTHING_LLM_URL और API_KEY डालो Pankaj जी!');
+                return;
+            }
+
             aiBtn.disabled = true;
             aiBtn.innerText = "⏳ AI में Upload हो रहा है...";
             successBox.style.display = 'block';
@@ -100,34 +105,40 @@
 
             // File का नाम और Content तैयार करो
             const fileName = `${title.replace(/ /g, '_')}_${chapter}.txt`;
-            const fileContent = `Title: ${title}\nEpisode: ${chapter}\nBhasha: ${bhasha}\n\n${content}`;
+            const fileContent = `Upanyas: ${title}\nEpisode: ${chapter}\nBhasha: ${bhasha}\nLekhak: Pankaj Singh Sajwan\n\n${content}`;
 
             try {
-                // AnyThingLLM API Call
-                const response = await fetch(`${ANYTHING_LLM_URL}/api/v1/document/upload`, {
+                // FIX 1: सही API Endpoint - /api/v1/document/raw-text
+                const response = await fetch(`${ANYTHING_LLM_URL}/api/v1/document/raw-text`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${API_KEY}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        workspaceSlug: WORKSPACE_SLUG,
-                        fileName: fileName,
-                        content: fileContent
+                        textContent: fileContent,
+                        metadata: {
+                            title: fileName,
+                            docSource: "likho.html",
+                            workspaceSlug: WORKSPACE_SLUG
+                        }
                     })
                 });
 
-                if (response.ok) {
-                    successMsg.innerHTML = `✅ हो गया! <b>${title} - ${chapter}</b> अब GyanDeep108 AI का हिस्सा है।<br>5 मिनट में AI इसे पढ़ लेगा।`;
-                    // Form खाली कर दो
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    successMsg.innerHTML = `✅ हो गया! <b>${title} - ${chapter}</b> अब GyanDeep108 AI का हिस्सा है।<br>AI इसे Embed कर रहा है, 2-3 मिनट लगेंगे।`;
                     document.getElementById('title').value = '';
                     document.getElementById('chapter').value = '';
                     document.getElementById('content').value = '';
                 } else {
-                    successMsg.innerHTML = "❌ Error: AI में Upload नहीं हुआ। API Key या URL चेक करें।";
+                    successMsg.innerHTML = `❌ Error: ${data.error || 'AI में Upload नहीं हुआ। API Key या Workspace Slug चेक करें।'}`;
+                    console.log(data);
                 }
             } catch (error) {
-                successMsg.innerHTML = "❌ Error: Server से Connect नहीं हुआ। Net चेक करें।";
+                successMsg.innerHTML = "❌ Error: Server से Connect नहीं हुआ। 1. Net चेक करो 2. Render वाला Link सही है?";
+                console.log(error);
             }
 
             aiBtn.disabled = false;
