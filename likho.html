@@ -23,11 +23,13 @@
             box-sizing: border-box; font-family: Arial;
         }
         textarea { min-height: 300px; resize: vertical; }
-       .save-btn {
-            background: #ff6b6b; color: white; padding: 15px;
-            border: none; border-radius: 12px; width: 100%;
-            font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px;
+       .btn {
+            padding: 15px; border: none; border-radius: 12px; width: 100%;
+            font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px;
         }
+       .save-btn { background: #ff6b6b; color: white; }
+       .ai-btn { background: #4CAF50; color: white; }
+       .btn:disabled { background: #999; cursor: not-allowed; }
        .note {
             background: rgba(255,255,255,0.15); padding: 15px;
             border-radius: 8px; margin-top: 20px; font-size: 14px;
@@ -35,11 +37,6 @@
        .success-box {
             background: rgba(0,255,0,0.2); padding: 15px;
             border-radius: 8px; margin-top: 15px; display: none;
-        }
-       .copy-btn {
-            background: white; color: #667eea; padding: 12px;
-            border: none; border-radius: 8px; width: 100%;
-            font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px;
         }
     </style>
 </head>
@@ -62,8 +59,100 @@
             <option value="Pahadi">Pahadi - पहाड़ी</option>
         </select>
         <textarea id="content" placeholder="Yahan apna Chapter likho Bhumi..."></textarea>
-        <button class="save-btn" onclick="saveChapter()">💾 JSON बनाओ + कॉपी करो</button>
+        
+        <button class="btn ai-btn" id="aiBtn" onclick="publishToAI()">🚀 GyanDeep108 AI में Publish करें</button>
+        <button class="btn save-btn" onclick="saveChapter()">💾 JSON बनाओ + कॉपी करो</button>
+        
         <div class="success-box" id="successBox">
-            <b>✅ JSON तैयार!</b><br>
-            <textarea id="jsonOutput" style="width:100%;height:300px;font-family:monospace"></textarea>
-            <button class="copy-btn" onclick="copyJSON()">📋
+            <b id="successMsg"></b><br>
+            <textarea id="jsonOutput" style="width:100%;height:200px;font-family:monospace;display:none"></textarea>
+        </div>
+
+        <div class="note">
+            <b>📝 Note:</b> "AI में Publish" दबाते ही ये Chapter सीधे GyanDeep108 AI के दिमाग में चला जाएगा। 5 मिनट बाद AI इससे सवालों के जवाब देने लगेगा।
+        </div>
+    </div>
+
+    <script>
+        // === ये 3 चीज़ें आपको AnyThingLLM से लेनी हैं ===
+        const ANYTHING_LLM_URL = "https://your-app.onrender.com"; // Render वाला Link
+        const API_KEY = "YOUR_API_KEY_HERE"; // Settings → API Keys से मिलेगा
+        const WORKSPACE_SLUG = "gyandeep108"; // आपका Workspace नाम
+
+        async function publishToAI() {
+            const title = document.getElementById('title').value.trim();
+            const chapter = document.getElementById('chapter').value.trim();
+            const bhasha = document.getElementById('bhasha').value;
+            const content = document.getElementById('content').value.trim();
+            const aiBtn = document.getElementById('aiBtn');
+            const successBox = document.getElementById('successBox');
+            const successMsg = document.getElementById('successMsg');
+
+            if (!title || !chapter || !content) {
+                alert('Naam, Episode Number, aur Content teeno likho');
+                return;
+            }
+
+            aiBtn.disabled = true;
+            aiBtn.innerText = "⏳ AI में Upload हो रहा है...";
+            successBox.style.display = 'block';
+            successMsg.innerHTML = "GyanDeep108 AI को नया Chapter भेज रहे हैं...";
+
+            // File का नाम और Content तैयार करो
+            const fileName = `${title.replace(/ /g, '_')}_${chapter}.txt`;
+            const fileContent = `Title: ${title}\nEpisode: ${chapter}\nBhasha: ${bhasha}\n\n${content}`;
+
+            try {
+                // AnyThingLLM API Call
+                const response = await fetch(`${ANYTHING_LLM_URL}/api/v1/document/upload`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        workspaceSlug: WORKSPACE_SLUG,
+                        fileName: fileName,
+                        content: fileContent
+                    })
+                });
+
+                if (response.ok) {
+                    successMsg.innerHTML = `✅ हो गया! <b>${title} - ${chapter}</b> अब GyanDeep108 AI का हिस्सा है।<br>5 मिनट में AI इसे पढ़ लेगा।`;
+                    // Form खाली कर दो
+                    document.getElementById('title').value = '';
+                    document.getElementById('chapter').value = '';
+                    document.getElementById('content').value = '';
+                } else {
+                    successMsg.innerHTML = "❌ Error: AI में Upload नहीं हुआ। API Key या URL चेक करें।";
+                }
+            } catch (error) {
+                successMsg.innerHTML = "❌ Error: Server से Connect नहीं हुआ। Net चेक करें।";
+            }
+
+            aiBtn.disabled = false;
+            aiBtn.innerText = "🚀 GyanDeep108 AI में Publish करें";
+        }
+
+        function saveChapter() {
+            const title = document.getElementById('title').value;
+            const chapter = document.getElementById('chapter').value;
+            const bhasha = document.getElementById('bhasha').value;
+            const content = document.getElementById('content').value;
+            
+            const jsonData = {
+                title: title,
+                chapter: chapter,
+                bhasha: bhasha,
+                content: content,
+                date: new Date().toISOString()
+            };
+            
+            document.getElementById('jsonOutput').value = JSON.stringify(jsonData, null, 2);
+            document.getElementById('jsonOutput').style.display = 'block';
+            document.getElementById('successBox').style.display = 'block';
+            document.getElementById('successMsg').innerHTML = "✅ JSON तैयार! नीचे से Copy कर लो";
+        }
+    </script>
+</body>
+</html>
