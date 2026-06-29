@@ -6,16 +6,18 @@
   <title>GyanDeep AI - Free Version</title>
   <style>
     body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-   .chat-container { max-width: 600px; margin: auto; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-   .header { background: #FF5722; color: white; padding: 15px; text-align: center; font-size: 20px; border-radius: 10px 10px 0 0; font-weight: bold; }
-   .chat-box { height: 450px; overflow-y: auto; padding: 15px; }
-   .msg { margin: 10px 0; padding: 12px 15px; border-radius: 18px; max-width: 85%; word-wrap: break-word; line-height: 1.6; }
-   .user { background: #DCF8C6; margin-left: auto; text-align: right; }
-   .bot { background: #e5e5ea; margin-right: auto; }
-   .bot h3 { margin: 10px 0 5px 0; font-size: 16px; color: #FF5722; }
-   .bot strong { color: #333; }
-   .bot ul { padding-left: 20px; margin: 5px 0; }
-   .input-area { display: flex; padding: 10px; border-top: 1px solid #ddd; }
+    .chat-container { max-width: 600px; margin: auto; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .header { background: #FF5722; color: white; padding: 15px; text-align: center; font-size: 20px; border-radius: 10px 10px 0 0; font-weight: bold; }
+    .chat-box { height: 450px; overflow-y: auto; padding: 15px; }
+    .msg { margin: 10px 0; padding: 12px 15px; border-radius: 18px; max-width: 85%; word-wrap: break-word; line-height: 1.6; position: relative; }
+    .user { background: #DCF8C6; margin-left: auto; text-align: right; }
+    .bot { background: #e5e5ea; margin-right: auto; padding-right: 45px; }
+    .bot h3 { margin: 10px 0 5px 0; font-size: 16px; color: #FF5722; }
+    .bot strong { color: #333; }
+    .bot ul { padding-left: 20px; margin: 5px 0; }
+    .copy-btn { position: absolute; top: 8px; right: 8px; background: #fff; border: 1px solid #ccc; border-radius: 6px; padding: 4px 8px; font-size: 12px; cursor: pointer; }
+    .copy-btn:active { background: #ddd; }
+    .input-area { display: flex; padding: 10px; border-top: 1px solid #ddd; }
     input { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 20px; outline: none; font-size: 16px; }
     button { margin-left: 10px; padding: 10px 20px; background: #FF5722; color: white; border: none; border-radius: 20px; font-size: 16px; }
   </style>
@@ -24,7 +26,7 @@
   <div class="chat-container">
     <div class="header">🤖 GyanDeep AI - Free Version</div>
     <div class="chat-box" id="chatBox">
-      <div class="msg bot">नमस्ते Pankaj जी! मैं GyanDeep AI हूँ। मुझसे कुछ भी पूछो।</div>
+      <div class="msg bot">नमस्ते Pankaj जी! मैं GyanDeep AI हूँ। मुझसे कुछ भी पूछो।<button class="copy-btn" onclick="copyText(this)">Copy</button></div>
     </div>
     <div class="input-area">
       <input type="text" id="userInput" placeholder="अपना सवाल लिखें..." onkeydown="if(event.key==='Enter') sendMessage()">
@@ -33,18 +35,24 @@
   </div>
 
   <script>
-    // 👇👇👇 बस यहाँ अपनी AQ... वाली पूरी Key डालो 👇👇👇
-    const API_KEY = "AQ.Ab8RN6Ixej7MzwmX3hwYsYaTCaPcmPR5U5LlR0b1Lw4uQR1PtQ";
-
     function formatMarkdown(text) {
       return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/### (.*)/g, '<h3>$1</h3>')
-      .replace(/## (.*)/g, '<h3>$1</h3>')
-      .replace(/# (.*)/g, '<h3>$1</h3>')
-      .replace(/\n- /g, '<br>• ')
-      .replace(/\n/g, '<br>');
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/### (.*)/g, '<h3>$1</h3>')
+        .replace(/## (.*)/g, '<h3>$1</h3>')
+        .replace(/# (.*)/g, '<h3>$1</h3>')
+        .replace(/> (.*)/g, '<blockquote>$1</blockquote>')
+        .replace(/\n- /g, '<br>• ')
+        .replace(/\n/g, '<br>');
+    }
+
+    // Copy Function
+    function copyText(btn) {
+      const text = btn.parentElement.innerText.replace('Copy', '').replace('Copied!', '').trim();
+      navigator.clipboard.writeText(text);
+      btn.innerText = 'Copied!';
+      setTimeout(() => { btn.innerText = 'Copy'; }, 1500);
     }
 
     async function sendMessage() {
@@ -52,13 +60,13 @@
       const chatBox = document.getElementById('chatBox');
       const btn = document.getElementById('sendBtn');
       const question = input.value.trim();
-
+      
       if (!question) return;
-
+      
       btn.disabled = true;
       chatBox.innerHTML += `<div class="msg user">${question}</div>`;
       input.value = '';
-
+      
       const loadingMsg = document.createElement('div');
       loadingMsg.className = 'msg bot';
       loadingMsg.innerText = 'सोच रहा हूँ...';
@@ -66,34 +74,22 @@
       chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
-        // Google Gemini 2.0 Flash - Latest Model
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: `Answer in detailed Hindi: ${question}` }] }]
-          })
-        });
-
-        const data = await response.json();
-
-        if (data.error) {
-          throw new Error(data.error.message);
-        }
-
-        let answer = data.candidates[0].content.parts[0].text;
+        const prompt = `Answer in detailed Hindi: ${question}`;
+        const apiUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(`https://text.pollinations.ai/prompt/${encodeURIComponent(prompt)}`);
+        
+        const response = await fetch(apiUrl);
+        let answer = await response.text();
+        
         const formattedAnswer = formatMarkdown(answer);
-
+        
         loadingMsg.remove();
-        chatBox.innerHTML += `<div class="msg bot">${formattedAnswer}</div>`;
-
+        chatBox.innerHTML += `<div class="msg bot">${formattedAnswer}<button class="copy-btn" onclick="copyText(this)">Copy</button></div>`;
+        
       } catch (error) {
         loadingMsg.remove();
-        chatBox.innerHTML += `<div class="msg bot">Pankaj जी, Error: ${error.message}<br>Solution: 1. Key सही Check करो 2. API Enable करो: https://console.cloud.google.com/apis/library/generativelanguage.googleapis.com</div>`;
-        console.log(error);
+        chatBox.innerHTML += `<div class="msg bot">Pankaj जी, Server Busy है। 1 मिनट बाद फिर Try करो।<button class="copy-btn" onclick="copyText(this)">Copy</button></div>`;
       }
-
+      
       chatBox.scrollTop = chatBox.scrollHeight;
       btn.disabled = false;
       input.focus();
